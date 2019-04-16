@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlobExplorer", "BlobExplorer\BlobExplorer.csproj", "{7101A620-CB91-410C-95D6-E47AB321943A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileExplorer", "FileExplorer\FileExplorer.csproj", "{75733CB6-9729-44FF-9B66-DE65E162C8A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7101A620-CB91-410C-95D6-E47AB321943A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7101A620-CB91-410C-95D6-E47AB321943A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7101A620-CB91-410C-95D6-E47AB321943A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75733CB6-9729-44FF-9B66-DE65E162C8A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75733CB6-9729-44FF-9B66-DE65E162C8A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75733CB6-9729-44FF-9B66-DE65E162C8A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75733CB6-9729-44FF-9B66-DE65E162C8A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
