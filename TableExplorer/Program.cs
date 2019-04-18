@@ -11,7 +11,19 @@ namespace TableExplorer
         {
             CloudStorageAccount cuentaAlmacenamiento =
                 CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("cadenaconexion"));
+            CloudTableClient clienteTablas = cuentaAlmacenamiento.CreateCloudTableClient();
+            CloudTable tabla = clienteTablas.GetTableReference("clases");
 
+            tabla.CreateIfNotExists();
+
+            var nombreTablas = clienteTablas.ListTables();
+
+            foreach (CloudTable item in nombreTablas)
+            {
+                System.Console.WriteLine(item.Name);
+            }
+
+            System.Console.ReadLine();
         }
     }
 }
