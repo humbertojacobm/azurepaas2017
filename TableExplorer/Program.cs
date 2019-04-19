@@ -15,6 +15,8 @@ namespace TableExplorer
             CloudTableClient clienteTablas = cuentaAlmacenamiento.CreateCloudTableClient();
             CloudTable tabla = clienteTablas.GetTableReference("clases");
 
+            tabla.DeleteIfExists();            
+
             //tabla.CreateIfNotExists();
 
             //var nombreTablas = clienteTablas.ListTables();
@@ -50,33 +52,46 @@ namespace TableExplorer
             //    System.Console.WriteLine("{0}, {1}\t{2}\t{3}",profe.PartitionKey, profe.RowKey, profe.NombreProfesor, profe.NombreAsignatura);
             //}
 
-            TableOperation operacionModificar = TableOperation.Retrieve<Profesor>("002", "Profesores");
+            ////insertar
+            //Profesor profeUno = new Profesor("007", "Profesores");
 
-            TableResult resultadoObtenido = tabla.Execute(operacionModificar);
+            //profeUno.NombreProfesor = "James Bond";
+            //profeUno.NombreAsignatura = "Espionaje internacional";
 
-            Profesor entidadModificada = (Profesor)resultadoObtenido.Result;
+            //TableOperation insertar = TableOperation.Insert(profeUno);
 
-            if (entidadModificada != null)
-            {
-                entidadModificada.NombreAsignatura = "Diseñño audio visual";
-                TableOperation operacionActualizar = TableOperation.Replace(entidadModificada);
-                tabla.Execute(operacionActualizar);
-                System.Console.WriteLine("Tu registro ha sido modificado");
-            }
-            else
-            {
-                System.Console.WriteLine("Tu entidad no existe");
-            }
+            //tabla.Execute(insertar);
 
-            TableQuery<Profesor> consulta =
-                new TableQuery<Profesor>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, "000"));
+            ////modificar
 
-            foreach (Profesor profe in tabla.ExecuteQuery(consulta))
-            {
-                System.Console.WriteLine("{0}, {1}\t{2}\t{3}", profe.PartitionKey, profe.RowKey, profe.NombreProfesor, profe.NombreAsignatura);
-            }
+            //TableOperation operacionModificar = TableOperation.Retrieve<Profesor>("004", "Profesor");
 
-            System.Console.WriteLine("Lista de profesores obtenida");
+            //TableResult resultadoObtenido = tabla.Execute(operacionModificar);
+
+            //Profesor entidadEliminada = (Profesor)resultadoObtenido.Result;
+
+            //if (entidadEliminada != null)
+            //{
+
+            //    TableOperation operacionActualizar = TableOperation.Delete(entidadEliminada);
+            //    tabla.Execute(operacionActualizar);
+            //    System.Console.WriteLine("Tu registro ha sido eliminado");
+            //}
+            //else
+            //{
+            //    System.Console.WriteLine("Tu entidad no existe");
+            //}
+
+            ////consulta
+            //TableQuery<Profesor> consulta =
+            //    new TableQuery<Profesor>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, "000"));
+
+            //foreach (Profesor profe in tabla.ExecuteQuery(consulta))
+            //{
+            //    System.Console.WriteLine("{0}, {1}\t{2}\t{3}", profe.PartitionKey, profe.RowKey, profe.NombreProfesor, profe.NombreAsignatura);
+            //}
+
+            System.Console.WriteLine("toda tu información ha sido borrada");
 
             //System.Console.WriteLine("Tus entidades han sido insertadas");
            
