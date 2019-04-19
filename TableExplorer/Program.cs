@@ -24,25 +24,35 @@ namespace TableExplorer
             //    System.Console.WriteLine(item.Name);
             //}
 
-            Profesor profeUno = new Profesor("001", "Profesores");
+            //Profesor profeUno = new Profesor("001", "Profesores");
 
-            profeUno.NombreProfesor = "Ricardo Celis";
-            profeUno.NombreAsignatura = "Microcontraladores";
+            //profeUno.NombreProfesor = "Ricardo Celis";
+            //profeUno.NombreAsignatura = "Microcontraladores";
 
-            Profesor profeDos = new Profesor("002", "Profesores");
+            //Profesor profeDos = new Profesor("002", "Profesores");
 
-            profeDos.NombreProfesor = "Carlos Paredes";
-            profeDos.NombreAsignatura = "Diseño audiovisual";
+            //profeDos.NombreProfesor = "Carlos Paredes";
+            //profeDos.NombreAsignatura = "Diseño audiovisual";
 
-            TableOperation insertarProfeUno = TableOperation.Insert(profeUno);
+            //TableOperation insertarProfeUno = TableOperation.Insert(profeUno);
 
-            TableOperation insertarProfeDos = TableOperation.Insert(profeDos);
+            //TableOperation insertarProfeDos = TableOperation.Insert(profeDos);
 
-            tabla.Execute(insertarProfeUno);
+            //tabla.Execute(insertarProfeUno);
 
-            tabla.Execute(insertarProfeDos);
+            //tabla.Execute(insertarProfeDos);
 
-            System.Console.WriteLine("Tus entidades han sido insertadas");
+            TableQuery<Profesor> consulta =
+                new TableQuery<Profesor>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, "001"));
+
+            foreach (Profesor profe in tabla.ExecuteQuery(consulta))
+            {
+                System.Console.WriteLine("{0}, {1}\t{2}\t{3}",profe.PartitionKey, profe.RowKey, profe.NombreProfesor, profe.NombreAsignatura);
+            }
+
+            System.Console.WriteLine("Lista de profesores obtenida");
+
+            //System.Console.WriteLine("Tus entidades han sido insertadas");
            
             System.Console.ReadLine();
         }
