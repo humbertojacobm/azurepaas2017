@@ -42,12 +42,38 @@ namespace TableExplorer
 
             //tabla.Execute(insertarProfeDos);
 
+            //TableQuery<Profesor> consulta =
+            //    new TableQuery<Profesor>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, "001"));
+
+            //foreach (Profesor profe in tabla.ExecuteQuery(consulta))
+            //{
+            //    System.Console.WriteLine("{0}, {1}\t{2}\t{3}",profe.PartitionKey, profe.RowKey, profe.NombreProfesor, profe.NombreAsignatura);
+            //}
+
+            TableOperation operacionModificar = TableOperation.Retrieve<Profesor>("002", "Profesores");
+
+            TableResult resultadoObtenido = tabla.Execute(operacionModificar);
+
+            Profesor entidadModificada = (Profesor)resultadoObtenido.Result;
+
+            if (entidadModificada != null)
+            {
+                entidadModificada.NombreAsignatura = "Diseñño audio visual";
+                TableOperation operacionActualizar = TableOperation.Replace(entidadModificada);
+                tabla.Execute(operacionActualizar);
+                System.Console.WriteLine("Tu registro ha sido modificado");
+            }
+            else
+            {
+                System.Console.WriteLine("Tu entidad no existe");
+            }
+
             TableQuery<Profesor> consulta =
-                new TableQuery<Profesor>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, "001"));
+                new TableQuery<Profesor>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, "000"));
 
             foreach (Profesor profe in tabla.ExecuteQuery(consulta))
             {
-                System.Console.WriteLine("{0}, {1}\t{2}\t{3}",profe.PartitionKey, profe.RowKey, profe.NombreProfesor, profe.NombreAsignatura);
+                System.Console.WriteLine("{0}, {1}\t{2}\t{3}", profe.PartitionKey, profe.RowKey, profe.NombreProfesor, profe.NombreAsignatura);
             }
 
             System.Console.WriteLine("Lista de profesores obtenida");
