@@ -21,7 +21,12 @@ namespace QueueHandler
 
             CloudQueueMessage peekedMessage = queue.PeekMessage();
 
-            foreach (CloudQueueMessage item in queue.GetMessages(250))
+            CloudBlobClient clienteBlob = miCuenta.CreateCloudBlobClient();
+            CloudBlobContainer contenedor = clienteBlob.GetContainerReference("contenedorregistros");
+            contenedor.CreateIfNotExists();
+
+
+            foreach (CloudQueueMessage item in queue.GetMessages(20,TimeSpan.FromSeconds(100)))
             {
                 string rutaArchivo = string.Format(@"c:\Tempr\log{0}.txt", item.Id);
                 TextWriter archivoTemp = File.CreateText(rutaArchivo);
@@ -29,7 +34,19 @@ namespace QueueHandler
                 archivoTemp.WriteLine(mensaje);
                 Console.WriteLine("Archivo creado");
                 archivoTemp.Close();
+
+                using (var fileStream = System.IO.File.OpenRead(rutaArchivo))
+                {
+                    CloudBlockBlob miBlob = contenedor.GetBlockBlobReference(string.Format("log{0}.txt", item.Id));
+                    miBlob.UploadFromStream(fileStream);
+                    Console.WriteLine("Blob creado");
+                }
+
+                queue.DeleteMessage(item);
+
             }
+
+            Console.ReadLine();
 
         }
     }
